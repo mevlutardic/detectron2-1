@@ -40,8 +40,13 @@ class MatrixVisualizer(object):
         if w <= 0 or h <= 0:
             return image_bgr
         mask, matrix = self._resize(mask, matrix, w, h)
+        
+        
         mask_bg = np.tile((mask == 0)[:, :, np.newaxis], [1, 1, 3])
         matrix_scaled = matrix.astype(np.float32) * self.val_scale
+        cv2.imwrite("matrix.png", matrix.astype(np.uint8))
+        print("box   :   ",(int(x), int(y)), (int(x + w), int(y + h)))
+        cv2.imwrite("43.png",matrix_scaled)
         _EPSILON = 1e-6
         if np.any(matrix_scaled > 255 + _EPSILON):
             logger = logging.getLogger(__name__)
@@ -86,6 +91,7 @@ class RectangleVisualizer(object):
         x, y, w, h = bbox_xywh
         color = color or self.color
         thickness = thickness or self.thickness
+        print("roi : ",(int(x), int(y)), (int(x + w), int(y + h)))
         cv2.rectangle(image_bgr, (int(x), int(y)), (int(x + w), int(y + h)), color, thickness)
         return image_bgr
 

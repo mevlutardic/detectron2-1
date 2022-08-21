@@ -398,6 +398,7 @@ class Visualizer:
         labels = _create_text_labels(classes, scores, self.metadata.get("thing_classes", None))
         keypoints = predictions.pred_keypoints if predictions.has("pred_keypoints") else None
 
+        
         if predictions.has("pred_masks"):
             masks = np.asarray(predictions.pred_masks)
             masks = [GenericMask(x, self.output.height, self.output.width) for x in masks]
